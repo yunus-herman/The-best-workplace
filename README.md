@@ -1,4 +1,4 @@
-# Capstone Project - The Best Place to Work 
+# Capstone Project - The Best to Workplace 
 
 **by : Yunus Herman**
 
@@ -39,11 +39,12 @@ For our audience, please begin by examining our ReadMe and read the Introduction
 
 ## Introduction:
 
-This project will be presenting to job seekers regarding to seek the best place to work. For employers, this project will be presenting 'how to boost company rating'. 
+This project aims to help job seekers identify the best companies to apply at, as well as to help employers determine how to make their employees happier and simultaneously attract a large number of job applicants. To achieve these aims, the project utilizes employee reviews posted on Glassdoor, a website where current and former employees anonymously review companies. Glassdoor also allows users to apply for jobs on its platform, which makes it popular. It is widely considered to have the most accurate and comprehensive employee reviews.
 
-## Problem Statment:
+## Problem Statement:
 
-Can we use company data (size, revenue, founded, jobs posted) and benefits to predict employee satisfaction? What kind of benefits that make company more attractive to job seeker? 
+1. Can we use basic company data (such as size, revenue, and foundation year) and benefits offered to predict employee satisfaction? 
+2. What kinds of benefits make a company more attractive to job seekers? 
 
 ## Background:
 
