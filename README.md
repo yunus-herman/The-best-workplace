@@ -1,4 +1,4 @@
-# Capstone Project - The Best to Workplace 
+  # Capstone Project - The Best to Workplace 
 
 **by : Yunus Herman**
 
@@ -14,9 +14,6 @@
 - Scikit-learn
 - StandardScaler
     
-## Table of Contents:
-
-For our audience, please begin by examining our ReadMe and read the Introduction, Problem Statement, and Background to familiarize yourselves with the design and focus of our project. Then refer to the below ordered notebooks (01_Glassdoor_Scraping.ipynb, 02_Data_Cleaning_EDA.ipynb &    03_Modeling.ipynb). Then you should be able to proceed with the remaining sections of our Readme detailing our process, and finally our Executive Summary/Recommendations can be found on Readme file.   
 
 ## Notebooks:
 
@@ -39,7 +36,7 @@ For our audience, please begin by examining our ReadMe and read the Introduction
 
 ## Introduction:
 
-This project aims to help job seekers identify the best companies to apply at, as well as to help employers determine how to make their employees happier and simultaneously attract a large number of job applicants. To achieve these aims, the project utilizes employee reviews posted on Glassdoor, a website where current and former employees anonymously review companies. Glassdoor also allows users to apply for jobs on its platform, which makes it popular. It is widely considered to have the most accurate and comprehensive employee reviews.
+This project aims to help job seekers identify the best companies to apply at, as well as to help employers determine how to make their employees happier and simultaneously attract a large number of job applicants. To achieve these aims, the project utilizes employee reviews posted on Glassdoor, a website where current and former employees anonymously review companies. Glassdoor also allows users to apply for jobs on its platform, which makes it popular. It is widely considered to have the most accurate and comprehensive employee reviews. Therefore my project has a double aim. On the one hand, I endeavor to help job seekers like me identify the best companies to apply at. On the other hand, I also help employers determine how to make their employees happier and simultaneously attract a large number of job applicants. To achieve these aims, I used employee reviews posted on Glassdoor, and combined them with other basic data about the company, such as size (number of employees), revenue, and age (the year the company was founded. I also looked at the various benefits that each company offers, such as health insurance, 401k, gym membership, free meals, and many others.
 
 ## Problem Statement:
 
@@ -48,14 +45,16 @@ This project aims to help job seekers identify the best companies to apply at, a
 
 ## Background:
 
-Everyday there are a story about complain and stress in a work. But also we hear about a great experience in a work....  
+There are thousands of job ads out there - how do I know which is the right one for me? More specifically, how can I tell if I would be happy and satisfied working for a particular company?  You cannot possibly apply to all those positions, so you ask yourself: “How can I know in advance what would be the best workplaces for me?”  This is what my project is all about. Using machine learning and basic data on companies and the benefits they provide, I determined whether a company is a good workplace.  
 
 ## Data Retrieval:
 
 Data from web scraping with Selenium of sources :
 **Glassdoor.com**
 
-Web scraping code : **01_Glassdoor_Scraping.ipynb**
+Web scraping notebook : **01_Glassdoor_Scraping.ipynb**
+
+Data of collection : March 10, 2021
  
 
 ### Data Dictionary:
@@ -145,57 +144,34 @@ Web scraping code : **01_Glassdoor_Scraping.ipynb**
 
 ### Web Scraping: 
 
-First thing to do was searching about which website has the data that I need for the project. I found Glassdoor.com has a lot of company reviews, features, great data quality and detail, and also has a large number of companies in the USA. This website is one of the best for job searching and job posting for employers. 
-After I explored the website to get the insight of the website structure, I made a list of which features that I want to get. 
- 
-I use Selenium and get elements with the Xpath selector. Get element(s) by Xpath has a better successful rate than other methods. I prefer Selenium than BeautifulSoup for this website because of the same reason. Google Chrome setted as my web scraping PATH. I use this browser to inspect elements in HTML and trace the target data. 
-Data collected in Dictionary format and then pandas dataframe. Lastly I store the data into a csv file named companies.csv in the data folder for the next step, data cleaning and Evaluation Data Analysis.
+I obtained my data by web scraping with Selenium from Glassdoor.com. Before getting started, I checked the robots.txt of the website to see what kinds of data I was allowed to scrape and the various rules and regulations that the company sets for data scrapers like me. Luckily, Glassdoor's policy is fairly liberal and allowed me to extract all the data I need for my study. Next I checked the website's structure and architecture (sitemap) to see what information was displayed on each page. Then I inspected the html elements of the website and determined the xpath to get the links and texts I needed. I always use find_element_by_xpath because in my experience it has the highest success rate. I then carefully tested each link and text one by one to make sure that I was getting the right results. I created a function to sort and store the data by company. I carried out quality assurance by taking some data samples and compared them to the data on the respective websites, e.g. company name, location of headquarters, how many branch offices/other locations the company has, the number of employees working for the company, and the company's revenue in the last fiscal year. Most of the features I used consisted of benefits, though.
 
+Data collected in Dictionary format and then pandas dataframe. Lastly I store the data into a csv file named companies.csv in the data folder for the next step, data cleaning and Evaluation Data Analysis.
 
 
 ### Data Cleaning:
 
-One thing I wanted to do was check and remove all duplicates because the data scraping process was on and off several times. I checked null values from all feature columns. Some null mean something, for example, if the office column is null means no branch (1 office only). Column types were checked and converted into numeric if do-able, for example string 6.6k means 6.6 x 1000 = 6600. 
-Some columns, for example, Company size column has been converted into 3 numerical categories: 
-1 - less than 5000 employees
-2 - 5001 to 10000 employees
-3 - 10000+ employees 
+After I had obtained all the data I needed, I cleaned up the data and analyzed them. I checked if there were any nulls and converted the data to numeric values. One thing I wanted to do was check and remove all duplicates because the data scraping process was on and off several times. I checked null values from all feature columns. Some null mean something, for example, if the office column is null means no branch (1 office only). Column types were checked and converted into numeric if do-able, for example string 6.6k means 6.6 x 1000 = 6600. another example, I gave companies with over 10,000 employees the numeric value 3, companies with 5,001–10,000 employees the value 2, and companies with up to 5,000 employees the value 1.
  
-The most important feature is company rating in the form of 1 to 5 and in 1 decimal digit. I used this to determine companies are great, good or below average (3,2 or 1). This feature is the target of modeling. I call this as company rank feature.  
-
+Reviews on Glassdoor use the usual 1–5 rating system, including fractions (e.g. 3.4, 4.7). In order to make that manageable, I divided the ratings into three classes: 2 for above average ratings (4.3 and over), 1 for average ratings (4.0–4.2), and 0 for below average ratings (3.9 and below). This might seem mathematically strange - why is anything below 4 considered below average? The reason was that I discovered that few if any employees rated their companies below 3; the median rating was about 4.0.
 
 ### EDA:
-Findings:
 
-1. The more difficult company interview, company rank is better.
+Arguably the most interesting finding was that companies that had the toughest interviews were also the ones ranked highest.
 
-2. Gym membership and work from home benefits can raise company's rank
+So much for potential employees. How about the employers? What can they do in order to make their employees happier and increase their company's ranking, thus attracting the best applicants? It turned out that paid gym memberships were the most popular benefit, meaning that companies that offered this benefit ranked highest. Next came the option of working from home, which employees seem to like, although this may have changed since the advent of Covid-19. Healthcare on site was the third most popular benefit, followed by free lunch and/or snacks, and then sabbatical (which may be the reason why the education sector was overall the industry with the happiest employees). The benefits that contributed the least to the employees' satisfaction were the availability of bereavement leaves, military leaves (not sure what that means), employee discounts, family medical leave, and supplemental workers' compensation. Having a pet-friendly workplace also did not turn out to boost a company's rating. I wonder why…  
 
-3. Company with 100 to 500 million (USD) revenue has the best rank. The bigger company revenue, has worse rank     
-
-4. Smaller companies have the best rank (less than 5000 employee)
-
-5. Education, Real estate, construction, non-profit, biotech & pharmaceuticals companies are the top 5 ranks.
+The industry (type of business the company engages in) also turned out to be significant. The education sector turned out to have the  happiest employees, followed by real estate companies, construction companies, nonprofits, and biotech & pharmaceutical companies. The least satisfied employees work in retail, followed by transportation & logistics; restaurants, bars, & food services; insurance; and business services. You're probably wondering about the ranking of IT companies: there were ranked as the 7th best industry to work in, out of 23.
 
 
 ### Modeling:
 
-For modeling purposes, since my target is classification, I tried Random forest, SVC, Ada boost, Logistic Regression, Decicion tree, Extra tree and K-NN. I had not so good score, the best score was 0.52 with Random forest.   
+For modeling purposes, since my target is classification problem, I tried Random forest, SVC, ADA boost, Logistic Regression, Decicion tree, Extra tree, K-NN and Gradient Boost. The best model for this case is Gradient Boost Classifier, this model has an accuracy rate of 55%. This seem low but is nevertheless statistacally significant, because the baseline is 36%. The model is not so good at predicting a satisfaction levels of the 'average' class but is fairly accurate for the above average and below average classes.
 
 
-**Modeling Takeaways:**
-The model is not good enough to predict company's rank.
+### Recommendations:
+Normally the benefits considered most important for employees are healthcare and pension 401k. Interestingly, the result of my analysis indicate that other features have a much higher predictive value when it comes to employee satisfaction. 
 
-### Executive Summary:
-
-**Problem Statement:** Can we use company data (size, revenue, founded, jobs posted) and benefits to predict employee satisfaction? What kind of benefits that make company more attractive to job seeker? 
-
-**Recommendations:** As I have expressed throughout this notebook, I believe that I am not able to predict the employee statisfaction from benefits features. Employee statisfaction is really subjective. The measurement should be by reviews. 
-
-I reccomend that employer can add some benefits that has positive correlation with company's rank :
-- Gym membership as additional benefits, maybe it helps employee to reduce stress and healthier. 
-- Allow employee to work from home, especialy during the pandemic.
-- Additional health care on site can also make employee feel more secure.
-- Free lunch or snacks can be an important benefit to boost company's rank.  
+To improve the model, results would be more robust if companies are divided into just two classes: 'above average' and 'below average'. We should bear in mind that employee satisfaction is a highly subjective notion. Find the way to obtain data about other importance features such as salary range. 
 
 
