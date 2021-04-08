@@ -1,4 +1,4 @@
-  # Capstone Project - The Best to Workplace 
+  # Capstone Project - The Best Workplace 
 
 **by : Yunus Herman**
 
